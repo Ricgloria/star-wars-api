@@ -15,7 +15,7 @@ import static java.util.Objects.nonNull;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/star-wars")
-public class StarWarsApiResource {
+public class StarWarsApiResource implements StarWarsApiSwagger {
 
     private final ManageMoviesService manageMoviesService;
 
