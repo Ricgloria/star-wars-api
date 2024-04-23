@@ -21,13 +21,11 @@ feign:
   httpclient:
     max-connections: 400
     max-connections-per-route: 400
-    disable-ssl-validation: true
   client:
     config:
       default:
         connectionTimeout: 3000
         readTimeout: 3000
-        trustSelfSigned: true
   okhttp:
     enabled: true
 
