@@ -35,4 +35,8 @@ Serviço Java responsável pela gestão de filmes Star Wars.
 
 ##Como subir o projeto localmente
 
-1. Executar a classe StarWarsTestApplication
+0. A API está com a validação de SSL desativada na branch "no-ssl" devido ao vencimento do certificado na API swapi dev.
+1. Executar a classe StarWarsApiApplication
+2. Comece os testes por: curl --location 'http://localhost:8080/v1/star-wars/all-movies'
+3. Para ver detalhes de um filme especifico, busque por "url" no body de retorno que lista todos os filmes
+4. Para mais detalhes da API veja o Swagger

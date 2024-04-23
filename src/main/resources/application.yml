@@ -26,13 +26,15 @@ feign:
       default:
         connectionTimeout: 3000
         readTimeout: 3000
-  okhttp:
-    enabled: true
 
 services:
   swapiapi:
     url: https://swapi.dev/api
     name: swapi-api
+
+internal:
+  details:
+    url: http://localhost:8080/v1/star-wars/movie/
 
 swagger:
   version: @project.version@
