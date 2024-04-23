@@ -1,0 +1,44 @@
+app:
+  service-name: "@project.artifactId@"
+  version: "@project.version@"
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: server
+  cloud:
+    openfeign:
+      okhttp:
+        enabled: true
+
+server:
+  port: 8080
+  max-http-header-size: 48000
+  parallelism: 200
+
+feign:
+  httpclient:
+    max-connections: 400
+    max-connections-per-route: 400
+    disable-ssl-validation: true
+  client:
+    config:
+      default:
+        connectionTimeout: 3000
+        readTimeout: 3000
+        trustSelfSigned: true
+  okhttp:
+    enabled: true
+
+services:
+  swapiapi:
+    url: https://swapi.dev/api
+    name: swapi-api
+
+swagger:
+  version: @project.version@
+  title: API de filmes Star Wars.
+  description: API para teste que faz busca externa em filmes Star Wars.
+  license: Apache 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0
