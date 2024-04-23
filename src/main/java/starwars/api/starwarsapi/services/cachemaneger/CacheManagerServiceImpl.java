@@ -6,6 +6,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import starwars.api.starwarsapi.domain.Movie;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.util.Objects.nonNull;
@@ -31,14 +32,13 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     public List<Movie> getMovies() {
         try {
             List<Movie> movies = new ArrayList<>();
-
-            for (String name : cacheManager.getCacheNames()) {
+            cacheManager.getCacheNames().forEach(name -> {
                 Cache cache = cacheManager.getCache(name);
-                if(nonNull(cache)) {
+                if (nonNull(cache)) {
                     Movie movie = cache.get(name, Movie.class);
                     movies.add(movie);
                 }
-            }
+            });
             return movies;
 
         } catch (Exception e) {
@@ -53,16 +53,23 @@ public class CacheManagerServiceImpl implements CacheManagerService {
     }
 
     @Override
-    public void updateMovie(String id, String detail) {
+    public void updateMovie(String id, Movie movie) {
         try {
-            Movie movie = internalGetMovie(id);
-            movie.setOpening_crawl(detail);
-            movie.setVersion(movie.getVersion() + 1);
-            requireNonNull(cacheManager.getCache(id)).put(id, movie);
+            Movie editedMovie = generateEditedMovie(id, movie);
+            requireNonNull(cacheManager.getCache(id)).put(id, editedMovie);
         } catch (Exception e) {
             System.out.println("Erro ao atualizar filmes");
             throw e;
         }
+    }
+
+    private Movie generateEditedMovie(String id, Movie movie) {
+        Movie oldMovie = internalGetMovie(id);
+        movie.setCreated(oldMovie.getCreated());
+        movie.setVersion(oldMovie.getVersion() + 1);
+        movie.setUrl(oldMovie.getUrl());
+        movie.setEdited(getDate());
+        return movie;
     }
 
     private Movie internalGetMovie(String id) {
@@ -72,5 +79,12 @@ public class CacheManagerServiceImpl implements CacheManagerService {
             System.out.println("Erro ao buscar filmes");
             throw e;
         }
+    }
+
+    private String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
+        return dateFormat.format(date);
     }
 }

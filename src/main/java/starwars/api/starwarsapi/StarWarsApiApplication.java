@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import starwars.api.starwarsapi.services.getmovies.GenerateMoviesService;
+import starwars.api.starwarsapi.services.generatemovies.GenerateMoviesService;
 
 
 @EnableFeignClients()

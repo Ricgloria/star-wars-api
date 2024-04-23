@@ -24,7 +24,8 @@ public class ManageMoviesServiceImpl implements ManageMoviesService {
     }
 
     @Override
-    public void updateDetailsById(String id, String detail) {
-        cacheManagerService.updateMovie(id, detail);
+    public void updateMovieDetails(Movie movie) {
+        String id = movie.getEpisode_id().toString();
+        cacheManagerService.updateMovie(id, movie);
     }
 }

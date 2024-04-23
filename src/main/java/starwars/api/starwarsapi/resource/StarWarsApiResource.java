@@ -3,7 +3,9 @@ package starwars.api.starwarsapi.resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import starwars.api.starwarsapi.adapter.MovieMapperAdapter;
 import starwars.api.starwarsapi.domain.Movie;
+import starwars.api.starwarsapi.resource.dto.MovieRequestDto;
 import starwars.api.starwarsapi.services.managemovies.ManageMoviesService;
 
 import java.util.List;
@@ -28,9 +30,9 @@ public class StarWarsApiResource {
         return nonNull(movie) ? ResponseEntity.ok(movie) : ResponseEntity.notFound().build();
     }
 
-    @PatchMapping( value = "/movie/{episode_id}")
-    public ResponseEntity<Void> updateMovieDetail(@PathVariable String episode_id, @RequestBody String detail) {
-        manageMoviesService.updateDetailsById(episode_id, detail);
+    @PatchMapping( value = "/movie")
+    public ResponseEntity<Void> updateMovieDetail(@RequestBody MovieRequestDto requestDto) {
+        manageMoviesService.updateMovieDetails(MovieMapperAdapter.INSTANCE.convert(requestDto));
         return ResponseEntity.noContent().build();
     }
 }
